@@ -28,9 +28,10 @@ SECRET_KEY = "django-insecure-32_s-*@i836(=w@lcwac6*l+$4sesot8_mhv*m9j0!n3-1av0!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['book_review.onrender.com', 'localhost']
+ALLOWED_HOSTS = ['book_review.onrender.com', 'localhost', '127.0.0.1']
 
 # Application definition
+SECURE_SSL_REDIRECT = True
 
 INSTALLED_APPS = [
     "books.apps.BooksConfig",
@@ -140,7 +141,7 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / 'static']
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
