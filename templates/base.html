@@ -1,0 +1,27 @@
+{% comment %} {% block title %}Book Review Platform{% endblock %} {% endcomment %}
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% if messages %}
+    {% include 'message.html' %}
+{% endif %}
+
+<h1 class="bg-yellow-100 text-teal-950 text-center p-4 font-bold" >Book Review Platform</h1>
+{% include 'nav.html' %}
+
+<div class="container mx-auto mt-6 flex justify-center">
+    {% block content %}
+    <!-- Content will be injected here by child templates -->
+    {% endblock %}
+</div>
+
+{% include 'footer.html' %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => alert.remove());
+        }, 5000); // Auto-dismiss after 5 seconds
+    });
+</script>

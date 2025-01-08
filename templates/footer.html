@@ -1,0 +1,49 @@
+<footer class="bg-gray-800 text-white mt-10 py-6">
+    <div class="container mx-auto px-4">
+        <!-- Links Section -->
+        <div class="flex flex-wrap justify-between">
+            <!-- Navigation Links -->
+            <div>
+                <h3 class="font-bold text-lg mb-2">Quick Links</h3>
+                <ul>
+                    <li><a href="{% url 'books:index' %}" class="hover:underline">Books</a></li>
+                    <li><a href="{% url 'books:genres' %}" class="hover:underline">Genres</a></li>
+                    <li><a href="{% url 'explore' %}" class="hover:underline">Explore</a></li>
+                    {% comment %} <li><a href="{% url 'about' %}" class="hover:underline">About</a></li> {% endcomment %}
+                </ul>
+            </div>
+
+            <!-- Made By Section -->
+            <div>
+                <h3 class="font-bold text-lg mb-2">Made By</h3>
+                <p>Mitkumar</p>
+            </div>
+
+            <!-- Other Projects -->
+            <div>
+                <h3 class="font-bold text-lg mb-2">Other Projects</h3>
+                <a href="https://mitkumar.com" class="hover:underline" target="_blank">View My Work</a>
+            </div>
+
+            <!-- Connect Section -->
+            <div>
+                <h3 class="font-bold text-lg mb-2">Connect</h3>
+                <ul>
+                    <li><a href="https://linkedin.com/in/your-profile" class="hover:underline" target="_blank">LinkedIn</a></li>
+                    <li><p class="hover:underline" target="_blank">mitkumar2105@gmail.com</a></li>
+                    
+                </ul>
+            </div>
+
+            <!-- Source Code -->
+            <div>
+                <h3 class="font-bold text-lg mb-2">Source Code</h3>
+                <a href="https://github.com/MitkumarR/Book-Review-Web" class="hover:underline" target="_blank">GitHub Repository</a>
+            </div>
+        </div>
+        <!-- Copyright Section -->
+        <div class="mt-6 text-center border-t border-gray-700 pt-4">
+            <p>&copy; {% now 'Y' %} MitkumarR | All rights reserved.</p>
+        </div>
+    </div>
+</footer>

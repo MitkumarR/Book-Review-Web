@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block content %}
+
+<div class="book-details h-lvh flex mt-3">
+    <div class="pd-3">
+        <img src="{{ book.thumbnail|default:'/static/images/default-thumbnail.jpg' }}"
+        alt="{{ book.title }} Thumbnail"
+        width="200" height="350">
+
+        <div>
+
+            {% if user_review %}
+            <p><strong>My Review:</strong></p>
+            <p>{{ user_review.rating }}</p>
+            <p>{{ user_review.comment}}</p>
+            <a href="{% url 'reviews:edit_review' book.id %}">Edit your Review</a>
+            {% else %}
+            <a href="{% url 'reviews:create_review' book.id %}">Give your Review</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="ml-3">
+            <p class=" text-wrap font-bold text-3xl">{{ book.title }}</p>
+    
+        {% if error_message %}
+            <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+            <p class="font-light text-teal-600 text-lg">{{ book.author }}</p>
+            
+            <div class="flex justify-start gap-3 text-center content-center">
+                {% if average_rating %}
+                    <p class="font-medium text-3xl">{{ average_rating }}</p>
+                    <div class="text-center content-center items-center font-light text-sm">{{ total_reviews }} reviews</div>
+                {% else %}
+                    <p>No reviews yet.</p>
+                {% endif %}
+            </div>
+            
+            
+            <div class="mt-5 flex gap-5">
+                <p class="font-thin ">Genre</p>
+                <div class="text-teal-950 hover:text-teal-500">
+                    {% for genre in book.genre.all %}
+                    <a href="{% url 'books:genre' genre.name %}">
+                        {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                    </a>
+                    {% empty %}
+                    <p>No genres available.</p>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <p class="text-wrap mt-3">{{ book.description }}</p>
+            </br>
+            <p class="mt-2">{{ book.pages }} pages </p>
+            <p>In {{ book.publication_year|date:"Y" }} by {{ book.publisher }}</p>
+            <p>{{ book.get_language_display }}</p>
+            <p>ISBN:{{ book.isbn }}</p>
+
+        {% include 'books/reviewByUsers.html' %}
+    </div>
+</div>
+
+{% endblock %}

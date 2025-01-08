@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <div class="h-lvh flex justify-center" width="900px">
+        <form method="post" action="{% url 'reviews:edit_review' book.id %}" class="items-center">
+            {% csrf_token %}
+            
+            <div class="form-group flex justify-center">
+                <label class="block text-lg font-semibold mb-2" for="rating">Rating (1-5):</label>
+                <div id="rating-stars" class="flex space-x-2">
+                    <!-- Radio Buttons Styled as Stars -->
+                    {% for star in "12345" %}
+                    <label class="cursor-pointer">
+                        <input 
+                            type="radio" 
+                            name="rating" 
+                            value="{{ forloop.counter }}" 
+                            class="hidden"
+                            {% if review.rating == forloop.counter %} checked {% endif %}
+                        >
+                        <svg 
+                            xmlns="http://www.w3.org/2000/svg" 
+                            class="w-8 h-8"
+                            fill="{% if review.rating >= forloop.counter %}orange{% else %}lightgray{% endif %}" 
+                            viewBox="0 0 24 24" 
+                            stroke="none">
+                            <path 
+                                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                        </svg>
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="form-group mt-5 flex justify-center">
+                <textarea id="comment" name="comment" class="form-control border-2" cols="100" rows="5">{{ review.comment }}</textarea>
+            </div>
+
+            <div class="form-group flex justify-center mt-5">
+                <label for="spoiler_tag">
+                    <input type="checkbox" id="spoiler_tag" name="spoiler_tag" {% if review.spoiler_tag %}checked{% endif %}>
+                    Contains Spoilers
+                </label>
+            </div>
+            
+            <div class="flex justify-center mt-5">
+                <button type="submit" class="btn btn-primary bg-teal-800 text-white text-center rounded-sm w-40">Update</button>
+            </div>
+        </form>
+    </div>
+    {% endif %}
+{% endblock %}

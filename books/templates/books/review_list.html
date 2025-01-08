@@ -1,0 +1,62 @@
+<div class="flex items-center">
+    <!-- Star Rating -->
+    <div class="flex space-x-1">
+        {% for star in "12345" %}
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5"
+                fill="{% if star|add:'0' <= review.rating %}orange{% else %}lightgray{% endif %}"
+                viewBox="0 0 24 24" stroke="none">
+                <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+        {% endfor %}
+    </div>
+    <span class="ml-2 text-sm text-gray-500">({{ review.rating }} / 5)</span>
+</div>
+<p class="mt-2 text-gray-800">{{ review.comment }}</p>
+<div class="flex gap-2">
+    <span id="like-count-{{ review.id }}">{{ review.total_likes }}</span><p>likes</p>
+</div>
+<div class="mt-1 text-sm text-gray-600">
+    <em>By {{ review.user.username }}</em>
+    {% if review.spoiler_tag %}
+        <span class="text-red-800 font-bold ml-2">Contains Spoilers</span>
+    {% endif %}
+</div>
+
+<div class="flex items-center">
+    <button
+        id="like-button-{{ review.id }}"
+        class="like-button {%if user in review.likes.all%} bg-red-500  {% else %} bg-gray-500 {%endif%}"
+        data-review-id="{{ review.id }}"
+    >
+        Like
+    </button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.like-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const reviewId = button.getAttribute('data-review-id');
+                fetch(`/reviews/like/${reviewId}/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                        'Content-Type': 'application/json',
+                    },
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.liked) {
+                            button.classList.add('text-red-500');
+                            button.classList.remove('text-gray-500');
+                        } else {
+                            button.classList.remove('text-red-500');
+                            button.classList.add('text-gray-500');
+                        }
+                        document.getElementById(`like-count-${reviewId}`).textContent = data.total_likes;
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+</script>

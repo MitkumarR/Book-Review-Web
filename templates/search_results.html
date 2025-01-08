@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block content %}
+<div class="container mt-4 w-[900px]">
+    <h2 class="text-teal-950 text-center">Search Results</h2>
+    {% if books %}
+
+    <div class="row flex flex-wrap justify-center gap-5">
+        {% for book in books %}
+            {% include 'card.html' %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-teal-500 text-3xl text-center p-3">No books found matching your query.</p>
+    {% endif %}
+    <div class="h-lvh">
+    </div>
+</div>
+{% endblock %}

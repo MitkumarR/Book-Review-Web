@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block content %}
+    <div class="container mt-4 h-lvh">
+        <h2 class="content-center">Genres</h2>
+        <ul class="list-group flex flex-wrap">
+            {% for genre in genres %}
+                <li class="list-group-item p-3 hover:border-b-2 hover:border-teal-950">
+                    <a href="{% url 'books:genre' genre.name %}">
+                        {{ genre.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

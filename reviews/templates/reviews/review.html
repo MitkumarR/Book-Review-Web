@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block content %}
+    {% if user.is_authenticated %}
+    <div class="h-lvh flex justify-center"  width="900px">
+        <form method="post" action="{% url 'reviews:create_review' book.id %}" class="items-center" >
+            {% csrf_token %}
+            <div class="form-group flex justify-center">
+                <label for="rating"></label>
+                    <select id="rating" name="rating" class="form-control">
+                        <option value="" disabled selected>Select a rating</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+            </div>
+            
+            <div class="form-group mt-5 flex justify-center">
+                <textarea id="comment" name="comment" value="write your thoughts on this book" class="form-control border-2" cols="100" rows="5"></textarea>
+            </div>
+            
+            <div class="form-group flex justify-center mt-5">
+                <label for="spoiler_tag">
+                    <input type="checkbox" id="spoiler_tag" name="spoiler_tag">
+                    Contains Spoilers
+                </label>
+            </div>
+                
+            <div class="flex justify-center mt-5">
+                <button type="submit" class="btn btn-primary bg-teal-800 text-white text-center rounded-sm w-40">Post</button>
+            </div>
+        </form>
+        {% else %}
+        <a href="{% url 'users:signin' %}">Sign In</a>
+        {% endif %}
+    </div>
+{% endblock%}

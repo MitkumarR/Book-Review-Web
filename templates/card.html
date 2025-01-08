@@ -1,0 +1,13 @@
+<div class="col-md-3">
+    <div class="card w-40">
+        <img src="{{ book.thumbnail|default:'/static/images/default-thumbnail.jpg' }}"
+            alt="{{ book.title }} Thumbnail"
+            width="150" height="200">
+            
+            <div class="card-body">
+                <h5 class="card-title font-bold text-teal-950">{{ book.title }}</h5>
+                <p class="card-text font-thin text-teal-600">{{ book.author }}</p>
+                <a href="{% url 'books:detail' book.id %}" class="btn btn-primary font-thin text-teal-800 italic underline">View Details</a>
+                </div>
+            </div>
+</div>

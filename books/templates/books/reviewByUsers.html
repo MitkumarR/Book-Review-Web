@@ -1,0 +1,28 @@
+<div class="container mx-auto mt-10">
+    <div class="mt-10">
+        <h4 class="text-2xl font-semibold mb-4">Rating and Reviews</h4>
+        {% if reviews %}
+            <ul class="space-y-6">
+                {% for review in reviews %}
+                <li class="border p-4 rounded-lg bg-gray-50 shadow-sm">
+                   {% include 'books/review_list.html' %} 
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-gray-700">No reviews yet. Be the first to review this book!</p>
+        {% endif %}
+    </div>
+
+    <!-- Add Review Button -->
+    <div class="mt-10">
+        {% if user.is_authenticated %}
+            <a href="{% url 'reviews:create_review' book.id %}" class="btn btn-primary bg-teal-800 text-white px-4 py-2 rounded">
+                Add Review
+            </a>
+        {% else %}
+            <p class="text-gray-700">Please <a href="{% url 'users:signin' %}" class="text-blue-500">sign in</a> to add a review.</p>
+        {% endif %}
+    </div>
+</div>
+

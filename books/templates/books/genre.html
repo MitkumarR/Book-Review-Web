@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block content%}
+<div class="h-lvh">
+    <h1 class="text-xl text-teal-500">{{ genre.name }}</h1>
+    <div class="row flex flex-wrap justify-start gap-5">
+        {% for book in books %}
+            {% include 'card.html' %}
+        {% empty %}
+        <div class="mt-5">
+            <p>No books found in this genre.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

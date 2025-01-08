@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block content %}
+
+    <div class="container mt-4 w-[900px]">
+        <h2 class="flex justify-start text-xl text-teal-950"><p class="border-b border-teal-950">Recently Added Books</p></h2>
+        <div class="row flex flex-wrap justify-center gap-5">
+            {% for book in recent_books %}
+                {% include 'card.html' %}
+            {% endfor %}
+        </div>
+        
+        <h2 class="mt-10 flex justify-start gap-5">
+            <p class="text-xl text-teal-950 border-b border-teal-950">Books by genre</p>
+            <p class="font-thin text-teal-800 italic underline"><a href="{% url 'books:genres' %}">More Genres</a></p>
+        </h2>
+        {% for genre, books in books_by_genre.items %}
+        <div class="genre-section mt-4 p-2">
+            <h3 class="flex justify-start text-teal-950 gap-5">
+                <p class="bg-amber-100 h-3 rounded-sm">{{ genre.name }}</p>
+                <p><a href="{% url 'books:genre' genre.name %}" class="btn btn-secondary mt-3 font-thin text-teal-800 italic underline"> show all</a></p>
+            </h3>
+            <div class="row flex flex-wrap justify-start gap-5 ml-5">
+                {% for book in books %}
+                    {% include 'card.html' %}
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

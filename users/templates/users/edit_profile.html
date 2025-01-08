@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block content %}
+<div class="flex justify-center h-screen bg-teal-50">
+    <div class="container bg-white shadow-lg rounded-lg p-8 max-w-lg">
+        <h2 class="text-2xl font-bold text-teal-800 mb-6 text-center">Edit Profile</h2>
+        <h5 class="text-lg font-semibold text-teal-800 mt-6 text-center">{{ user.username }}</h5>
+    
+        <form method="post" action="{% url 'users:edit_profile' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="space-y-6">
+                <!-- Name -->
+                <div>
+                    <label for="{{ form.name.id_for_label }}" class="block text-teal-700 font-medium">Name:</label>
+                    {{ form.name|add_class:"w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-teal-500 focus:border-teal-500" }}
+                    {% if form.name.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.name.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label for="{{ form.email.id_for_label }}" class="block text-teal-700 font-medium">Email:</label>
+                    {{ form.email|add_class:"w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-teal-500 focus:border-teal-500" }}
+                    {% if form.email.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.email.errors.0 }}</p>
+                    {% endif %}
+
+                </div>
+
+                <!-- Country -->
+                <div>
+                    <label for="{{ form.country.id_for_label }}" class="block text-teal-700 font-medium">Country:</label>
+                    {{ form.country|add_class:"w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-teal-500 focus:border-teal-500" }}
+                    {% if form.country.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.country.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Date of Birth -->
+                <div>
+                    <label for="{{ form.dob.id_for_label }}" class="block text-teal-700 font-medium">Date of Birth:</label>
+                    {{ form.dob|add_class:"w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-teal-500 focus:border-teal-500" }}
+                    {% if form.dob.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.dob.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Profile Picture -->
+                <div>
+                    <label for="{{ form.profile_pic.id_for_label }}" class="block text-teal-700 font-medium">Profile Picture:</label>
+                    {{ form.profile_pic|add_class:"w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-teal-500 focus:border-teal-500" }}
+                    {% if form.profile_pic.errors %}
+                        <p class="text-red-500 text-sm mt-1">{{ form.profile_pic.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Join Date (Disabled) -->
+                <div>
+                    <label for="join_date" class="block text-teal-700 font-medium">Joined On:</label>
+                    <input 
+                        type="text" 
+                        id="join_date" 
+                        name="join_date" 
+                        class="w-full border border-gray-300 rounded-lg px-4 py-2 bg-gray-100" 
+                        value="{{ user.join_date|date:'F j, Y' }}" 
+                        disabled>
+                </div>
+
+                <!-- Save Button -->
+                <div class="flex justify-center mt-5">
+                    <button 
+                        type="submit" 
+                        class="bg-teal-800 text-white w-40 py-2 rounded-sm hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2">
+                        Save Changes
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

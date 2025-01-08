@@ -1,0 +1,27 @@
+<nav class="flex justify-center">
+    <ul class="flex justify-center p-2 gap-5">
+        <li class="inline text-center content-center delay-100 hover:border-b-2 hover:border-teal-950 hover:delay-100 "><a href="{% url 'home' %}">Home</a></li>
+        <li class="inline text-center content-center delay-100 hover:border-b-2 hover:border-teal-950 hover:delay-100 "><a href="{% url 'books:index' %}">Books</a></li>
+        <li class="inline text-center content-center delay-100 hover:border-b-2 hover:border-teal-950 hover:delay-100"><a href="{% url 'books:genres' %}">Genres</a></li>
+        <li class="inline text-center content-center delay-100 hover:border-b-2 hover:border-teal-950 hover:delay-100"><a href="{% url 'explore' %}">Explore</a></li>
+    </ul>
+    <div class="flex justify-center p-2 content-center items-center">
+        <form method="get" action="{% url 'search' %}" class="flex justify-center items-center my-auto gap-5">
+            <input type="text" name="q" placeholder="Search books by title" required class="inline text-center content-center">
+            <button type="submit" class="inline text-center content-center bg-teal-800 rounded-sm text-white w-20">Search</button> 
+        </form>
+    </div>
+    <ul class="flex justify-center p-2 gap-5">
+        {% if user.is_authenticated %}
+            <li class="inline text-center content-center delay-100 hover:border-b-2 hover:border-teal-950 hover:delay-100"><a href="{% url 'users:profile' %}">Profile</a></li>
+            <li class="inline text-center content-center">
+                <form method="post" action="{% url 'users:signout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger rounded-sm w-20 border delay-100 border-teal-800 hover:delay-100 hover:bg-teal-800 hover:text-white ">Sign Out</button>
+                </form>
+            </li>
+        {% else %}
+            <li class="inline text-center content-center rounded-sm w-20 border delay-100 border-teal-800 hover:delay-100 hover:bg-teal-800 hover:text-white"><a href="{% url 'users:signin' %}">Sign In</a></li>
+        {% endif %}
+    </ul>
+</nav>

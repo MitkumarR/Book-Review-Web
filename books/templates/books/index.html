@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block content%}
+<div class="container mt-4 w-[900px]">
+    {% if book_list%}
+        <div class="row flex flex-wrap justify-start gap-5">
+            {% for book in book_list %}
+                {% include 'card.html' %}
+            {% endfor %}
+        </div>
+    {% else %}
+    <p>No books in the list.</p>
+    {% endif %}
+
+</div>
+
+{% endblock%}

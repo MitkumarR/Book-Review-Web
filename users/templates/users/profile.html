@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load static %}
+<link href="{% static 'css/main.css' %}" rel="stylesheet">
+
+{% block content %}
+<div class="flex justify-center h-screen bg-teal-50">
+    <div class="container bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-2xl font-bold text-teal-800 mb-6 text-center">My Profile</h2>
+        <div class="rounded-full justify-self-center overflow-hidden border-4 border-yellow-400 w-24 h-24 mb-4">
+            <img src="{% if user.profile_pic %}{{ user.profile_pic.url }}{% else %}/static/users/user.png{% endif %}"
+                 alt="Profile Picture"
+                 class="w-20 h-20 object-cover">
+        </div>
+        
+        <h5 class="text-lg font-semibold text-teal-800">{{ user.username }}</h5>
+        
+        <div class="flex flex-col justify-start items-center">
+            <div class="text-start">
+                <p class="text-gray-700 mt-2">
+                    <strong>Name:</strong> {{ user.name }}<br>
+                    <div>
+                        <strong>Email:</strong> {{ user.email }}
+                        {% if user.email and not user.is_email_verified %}
+                            <button 
+                                type="button" 
+                                onclick="location.href='{% url 'users:send_verification_email' %}'"
+                                class="ml-2  text-teal-800 px-4 py-2 rounded-lg hover:underline">
+                                Verify
+                            </button>
+                            <p class="text-red-800 text-sm mt-1">Email is not verified. Please verify your email.</p>
+                        {% endif %}
+                    </div>
+                    <strong>Joined On:</strong> {{ user.join_date|date:"F j, Y" }}<br>
+                    <strong>Country:</strong> {{ user.country|default:"Not provided" }}<br>
+                    <strong>Date of Birth:</strong>
+                    {% if user.dob %}
+                        {{ user.dob|date:"F j, Y" }}
+                    {% else %}
+                        Not provided
+                    {% endif %}
+                </p>
+            </div>
+
+        </div>
+
+        <div class="flex justify-center mt-5 gap-3">
+            <a href="{% url 'users:edit_profile' %}" 
+            class="mt-6 justify-self-center">
+                <p class="bg-teal-800 text-white rounded-sm w-40 text-center"> Edit Profile </p>
+            </a>
+            <a href="{% url 'users:password_change' %}" 
+            class="mt-6 justify-self-center">
+                <p class="bg-teal-800 text-white rounded-sm w-40 text-center"> Change Password </p>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
