@@ -92,18 +92,18 @@ WSGI_APPLICATION = "book_review.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.postgresql",
-    #     'NAME': 'book_review',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'mk21@pgsql',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432',
-    #     "OPTIONS": {
-    #         'sslmode': 'disable',
-    #     },
-    # }
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        'NAME': 'book_review',
+        'USER': 'postgres',
+        'PASSWORD': 'mk21@pgsql',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        "OPTIONS": {
+            'sslmode': 'disable',
+        },
+    }
+    # 'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
 # Password validation
