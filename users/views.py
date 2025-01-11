@@ -6,6 +6,7 @@ from django.contrib.auth.views import PasswordChangeView, PasswordResetView, Pas
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, FormView, TemplateView, UpdateView
 
+from book_review import settings
 from .models import User
 from .forms import CustomAuthenticationForm, SignupForm, EditProfileForm, CustomPasswordChangeForm, \
     CustomSetPasswordForm, CustomPasswordResetForm
