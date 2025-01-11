@@ -122,7 +122,7 @@ from django.utils.encoding import force_bytes
 def generate_email_verification_link(user):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
-    return f"http://127.0.0.1:8000/users/verify_email/{uid}/{token}/"
+    return f"https://book-review-mlqf.onrender.com/users/verify_email/{uid}/{token}/"
 
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
