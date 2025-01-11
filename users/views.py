@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth import login, update_session_auth_hash
 from django.contrib.auth.views import PasswordChangeView, PasswordResetView, PasswordResetDoneView, \
     PasswordResetConfirmView, PasswordResetCompleteView
@@ -122,7 +124,8 @@ from django.utils.encoding import force_bytes
 def generate_email_verification_link(user):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
-    return f"http://127.0.0.1:8000/users/verify_email/{uid}/{token}/"
+    # return f"http://127.0.0.1:8000/users/verify_email/{uid}/{token}/"
+    return f"https://{os.environ.get('ALLOWED_HOST')}/users/verify_email/{uid}/{token}/"
 
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
@@ -134,11 +137,11 @@ def send_verification_email(request):
     send_mail(
         'Verify Your Email Address',
         f'Click the following link to verify your email: {verification_link}',
-        'mit122807@gmail.com',  # Replace with your email
+        os.environ.get("EMAIL_HOST_USER"),  # Replace with your email
         [user.email],
         fail_silently=False,
     )
-    messages.info(request, "A verification email has been sent to your email address.")
+    messages.info(request, "A verification email has been sent to your email address.(if not found, check spam folder)")
     print( "A verification email has been sent to your email address.")
     return redirect('users:profile')
 

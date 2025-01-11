@@ -23,16 +23,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-32_s-*@i836(=w@lcwac6*l+$4sesot8_mhv*m9j0!n3-1av0!"
+# SECRET_KEY = "django-insecure-32_s-*@i836(=w@lcwac6*l+$4sesot8_mhv*m9j0!n3-1av0!"
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", "unsafe-development-key")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+# DEBUG = True
 
-ALLOWED_HOSTS = ['book-review-mlqf.onrender.com', 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = ['book-review-mlqf.onrender.com', 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = ['127.0.0.1']
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
+
 CSRF_TRUSTED_ORIGINS = ['https://book-review-mlqf.onrender.com']
 
 # Application definition
-SECURE_SSL_REDIRECT = True
+if DEBUG:
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SECURE = False
+else:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 INSTALLED_APPS = [
     "books.apps.BooksConfig",
@@ -92,19 +109,21 @@ WSGI_APPLICATION = "book_review.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     "ENGINE": "django.db.backends.postgresql",
-    #     'NAME': 'book_review',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'mk21@pgsql',
-    #     'HOST': 'localhost',
-    #     'PORT': '5432',
-    #     "OPTIONS": {
-    #         'sslmode': 'disable',
-    #     },
-    # }
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        'NAME': 'book_review',
+        'USER': 'postgres',
+        'PASSWORD': 'mk21@pgsql',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        "OPTIONS": {
+            'sslmode': 'disable',
+        },
+    }
 }
+
+database_url = os.environ.get("DATABASE_URL")
+DATABASES['default'] = dj_database_url.parse(database_url)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -157,6 +176,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Use appropriate host for your email provider
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'mit122807@gmail.com'  # Replace with your email
-EMAIL_HOST_PASSWORD = 'hrkm pnhi pszl vcga'  # Replace with your email password or app-specific password
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")  # Replace with your email
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")  # Replace with your email password or app-specific password
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

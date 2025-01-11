@@ -28,7 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     name = models.CharField(max_length=255)
     username = models.CharField(max_length=255, unique=True)  # Unique username for identification
-    email = models.EmailField(blank=False, null=False, unique=False)  # Non-unique email
+    email = models.EmailField(blank=False, null=False, unique=True)  # Non-unique email
     is_email_verified = models.BooleanField(default=False)
     join_date = models.DateTimeField(auto_now_add=True)
     country = models.CharField(max_length=100)
