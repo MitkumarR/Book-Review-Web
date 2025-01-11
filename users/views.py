@@ -125,8 +125,11 @@ def generate_email_verification_link(user):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
     # return f"http://127.0.0.1:8000/users/verify_email/{uid}/{token}/"
-    return f"https://{os.environ.get('ALLOWED_HOST')}/users/verify_email/{uid}/{token}/"
-   
+    host = os.environ.get('ALLOWED_HOST', '127.0.0.1:8000')  # Default to localhost for development
+    scheme = "https" if not settings.DEBUG else "http"  # Use HTTPS in production, HTTP in development
+    return f"{scheme}://{host}/users/verify_email/{uid}/{token}/"
+    # return f"https://{os.environ.get('ALLOWED_HOST')}/users/verify_email/{uid}/{token}/"
+
 
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
