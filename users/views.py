@@ -138,7 +138,7 @@ def send_verification_email(request):
         [user.email],
         fail_silently=False,
     )
-    messages.info(request, "A verification email has been sent to your email address.")
+    messages.info(request, "A verification email has been sent to your email address.(if not get check your spam folder)")
     print( "A verification email has been sent to your email address.")
     return redirect('users:profile')
 
