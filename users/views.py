@@ -124,12 +124,9 @@ from django.utils.encoding import force_bytes
 def generate_email_verification_link(user):
     token = default_token_generator.make_token(user)
     uid = urlsafe_base64_encode(force_bytes(user.pk))
-<<<<<<< HEAD
     # return f"http://127.0.0.1:8000/users/verify_email/{uid}/{token}/"
     return f"https://{os.environ.get('ALLOWED_HOST')}/users/verify_email/{uid}/{token}/"
-=======
-    return f"https://book-review-mlqf.onrender.com/users/verify_email/{uid}/{token}/"
->>>>>>> 4a7f3dc20252ded14fa97e0d3478b81a2be4cae5
+   
 
 from django.core.mail import send_mail
 from django.shortcuts import redirect, render
@@ -145,11 +142,8 @@ def send_verification_email(request):
         [user.email],
         fail_silently=False,
     )
-<<<<<<< HEAD
     messages.info(request, "A verification email has been sent to your email address.(if not found, check spam folder)")
-=======
     messages.info(request, "A verification email has been sent to your email address.(if not get check your spam folder)")
->>>>>>> 4a7f3dc20252ded14fa97e0d3478b81a2be4cae5
     print( "A verification email has been sent to your email address.")
     return redirect('users:profile')
 
