@@ -1,4 +1,6 @@
 # Create your views here.
+from collections import defaultdict
+
 from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +11,7 @@ class IndexView(ListView):
 
     template_name = "books/index.html"
     context_object_name = "book_list"
+    paginate_by = 25
 
     def get_queryset(self):
         return Book.objects.order_by("-created_at")
@@ -38,6 +41,7 @@ class GenreView(ListView):
     model = Book
     template_name = "books/genre.html"
     context_object_name = "books"
+    paginate_by = 25
 
     def get_queryset(self):
         genre_name = self.kwargs.get('genre_name')
@@ -53,3 +57,19 @@ class GenreListView(ListView):
     model = Genre
     template_name = "books/genres.html"
     context_object_name = "genres"
+
+    def get_queryset(self):
+        return Genre.objects.order_by("name")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        genres = self.get_queryset()
+
+        grouped = defaultdict(list)
+        for genre in genres:
+            first_letter = genre.name[0].upper()
+            grouped[first_letter].append(genre)
+
+        # Sort keys
+        context["grouped_genres"] = dict(sorted(grouped.items()))
+        return context

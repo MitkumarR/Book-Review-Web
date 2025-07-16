@@ -4,7 +4,7 @@
 <link href="{% static 'css/main.css' %}" rel="stylesheet">
 
 {% block content%}
-<div class="h-lvh">
+<div class="container mt-4 w-[900px]">
     <h1 class="text-xl text-teal-500">{{ genre.name }}</h1>
     <div class="row flex flex-wrap justify-start gap-5">
         {% for book in books %}
@@ -15,6 +15,25 @@
         </div>
         {% endfor %}
     </div>
+
+     <div class="pagination flex justify-center mt-8">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
 </div>
 
 {% endblock %}

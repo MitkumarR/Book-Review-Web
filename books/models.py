@@ -24,16 +24,18 @@ class Book(models.Model):
         ('RUS', 'Russian'),
     ]
 
+    isbn = models.CharField(max_length=13, unique=True)
     title = models.CharField(max_length=255)
+    subtitle = models.CharField(max_length=255, null=True)
     author = models.CharField(max_length=255)
     genre = models.ManyToManyField(Genre, related_name="books")
-    isbn = models.CharField(max_length=13, unique=True)
-    publication_year = models.DateField()
-    pages = models.IntegerField()
-    language = models.CharField(max_length=3, choices=LANGUAGES)
     thumbnail = models.URLField(max_length=500, blank=True, null=True)
     description = models.TextField()
-    publisher = models.CharField(max_length=225)
+    publication_year = models.DateField()
+
+    pages = models.IntegerField(null=True)
+    language = models.CharField(max_length=3, choices=LANGUAGES, null=True)
+    publisher = models.CharField(max_length=225, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
