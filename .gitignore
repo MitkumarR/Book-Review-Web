@@ -1,2 +1,18 @@
 node_modules/
 .env
+
+*.env
+
+# Virtual Environment 
+venv/
+env/
+ENV/
+
+# PyCharm / JetBrains IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Django migrations
+**/migrations/
