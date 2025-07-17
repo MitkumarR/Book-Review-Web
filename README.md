@@ -36,7 +36,6 @@ It provides features for managing books, genres, user profiles, and reviews.
 - Manage users, books, and genres via the Django Admin Panel.
 
 ---
-
 ## **Project Setup**
 
 ### **Prerequisites**
